@@ -16,15 +16,24 @@ void populateArrays(int programmers[10][10], int departments[10][10]){
 int selectionsFilled(int selection[5][2]){
     for (int i = 0; i < 5; i++){
         if (selection[i][1] == -1){
-            return 0;
+            return 1;
         }
     }
-    return 1;
+    return 0;
 }
 
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
     do {
-        
+        for (int i = 0; i < 5; i++){
+            if (selection[i][1] == -1){
+                for (int j = 0; j < 5; j++){
+                    int first = programmers[i][j] - 1;
+                    if (selection[first][i] == -1){
+                        selection[first][i] == first;
+                    }
+                } 
+            }
+        }
     } while (selectionsFilled(selection))
 
 }
