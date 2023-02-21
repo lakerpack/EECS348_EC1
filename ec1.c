@@ -16,7 +16,11 @@ void populateArrays(int programmers[10][10], int departments[10][10]){
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
     for (int i = 0; i < 5; i++){
         for (int first = 0; first < 5; first++){
-            printf("Department %d picks Programmer %d ", first + 1, departments[first][i]);
+            for (int second = 1 + first; second < 5; second++){
+                if(departments[first][i] == departments[second][i]){
+                    printf("Department %d and %d conflict over Programmer %d \n", first + 1, second + 1, departments[first][i]);
+                }
+            }
         }
         printf("\n");
     }
