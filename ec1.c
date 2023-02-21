@@ -13,24 +13,17 @@ void populateArrays(int programmers[10][10], int departments[10][10]){
     fclose(input);
 }
 
-int check(int department, int fulfilled[5]){
-    for (int i = 0; i < 5; i++){
-        if (department == fulfilled[i]) return 0;
-    }
+int check(int department, int selection[5][2]){
+    if (selection[department][1] != -1) return 0;
     return 1;
 }
 
-int solve(int programmers[10][10], int departments[10][10], int selection[5][2], int conflicts[5], int counter2, int conflictee, int fulfilled[5]){
+int solve(int programmers[10][10], int departments[10][10], int selection[5][2], int conflicts[5], int counter2, int conflictee){
     for (int i = 0; i < 5; i++){
         for (int j = 0; j < counter2 + 1; j++){
             if (programmers[conflictee][i] == conflicts[j]){
                 printf("Department %d was able to pick Programmer %d \n", conflicts[j], conflictee);
                 selection[conflicts[j] - 1][1] = conflictee;
-                for (int k = 0; k < 5; k++){
-                    if (fulfilled[k] == 99){
-                        fulfilled[k] = conflicts[j] - 1;
-                    }
-                }
                 return 0;
             }
         }
@@ -39,11 +32,10 @@ int solve(int programmers[10][10], int departments[10][10], int selection[5][2],
 }
 
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
-    int fulfilled[5] = {99,99,99,99,99};
     int counter = 0;
     for (int i = 0; i < 5; i++){
         for (int first = 0; first < 5; first++){
-            if (check(first, fulfilled)){
+            if (check(first, selection)){
                 int counter2 = 0;
                 int conflicts[5];
                 int conflictee;
@@ -58,10 +50,8 @@ void match(int programmers[10][10], int departments[10][10], int selection[5][2]
                         conflictee = departments[first][i];
                     }
                 }
-                solve(programmers, departments, selection, conflicts, counter2, conflictee, fulfilled);
+                solve(programmers, departments, selection, conflicts, counter2, conflictee);
                 if (safe) {
-                    fulfilled[counter] = first;
-                    counter++;
                     selection[first][1] = departments[first][i];
                     printf("Department %d was able to pick Programmer %d \n", first + 1, departments[first][i]);
                 }
@@ -73,11 +63,18 @@ void match(int programmers[10][10], int departments[10][10], int selection[5][2]
 
 }
 
+void printSelections(int selection[5][2]){
+    for (int i = 0; i < 5; i++){
+        printf("Department %d gets Programmer %d \n", i + 1, selection[i][1]);
+    }
+}
+
 int main(){
     int programmers[10][10];
     int departments[10][10];
-    int selection[5][2] = {{1,0},{2,0}, {3,0}, {4,0}, {5,0}};
+    int selection[5][2] = {{1,-1},{2,-1}, {3,-1}, {4,-1}, {5,-1}};
     populateArrays(programmers, departments);
     match(programmers, departments, selection);
+    printSelections(selection);
     return 0;
 }
