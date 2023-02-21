@@ -22,16 +22,22 @@ int selectionsFilled(int selection[5][2]){
     return 0;
 }
 
+void check(int selection[5][2], int programmer){
+    for (int i = 0; i < 5; i++){
+        if (selection[i][1] == programmer){
+            return 1;
+        }
+    } 
+    return 0;
+}
+
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
     do {
         for (int i = 0; i < 5; i++){
             if (selection[i][1] == -1){
-                for (int j = 0; j < 5; j++){
-                    int first = programmers[i][j] - 1;
-                    if (selection[first][i] == -1){
-                        selection[first][i] == first;
-                    }
-                } 
+                for (int k = 0; k < 5; k++){
+                    
+                }
             }
         }
     } while (selectionsFilled(selection))
