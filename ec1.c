@@ -13,39 +13,10 @@ void populateArrays(int programmers[10][10], int departments[10][10]){
     fclose(input);
 }
 
-
-void printArrays(int programmers[10][10], int departments[10][10]){
-    printf("Departments: \n");
-    for (int i = 0; i < 5; i++){
-        printf("%d %d %d %d %d \n", departments[0][i], departments[1][i], departments[2][i], departments[3][i], departments[4][i]);
-    }
-    printf("\n");
-    printf("Programmers: \n");
-    for (int i = 0; i < 5; i++){
-        printf("%d %d %d %d %d \n", programmers[0][i], programmers[1][i], programmers[2][i], programmers[3][i], programmers[4][i]);
-    }
-}
-
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
     for (int i = 0; i < 5; i++){
-        for (int dep1 = 0; dep1 < 5; dep1++){
-            printf("Department %d Row %d, programmer: %d ", dep1 + 1, i + 1, departments[dep1][i]);
-            int counter = 0;
-            int conflicts[5];
-            int conflictee;
-            for (int dep2 = 0; dep2 < 5; dep2++){
-                if ((departments[dep1][i] == departments[dep2][i]) && (dep1 != dep2)){
-                    if (counter == 0) conflicts[0] = dep1 + 1;
-                    counter++;
-                    conflicts[counter] = dep2 + 1;
-                    conflictee = departments[dep1][i];
-                }
-            }
-            printf("Conflicts with: ");
-            for (int j = 0; j < counter + 1; j++){
-                printf("%d ", conflicts[j]);
-            }
-            printf("Conflictee: %d \n", conflictee);
+        for (int first = 0; first < 5; first++){
+            printf("Department %d picks Programmer %d ", first + 1, departments[first][i]);
         }
         printf("\n");
     }
@@ -57,7 +28,6 @@ int main(){
     int departments[10][10];
     int selection[5][2] = {{1,0},{2,0}, {3,0}, {4,0}, {5,0}};
     populateArrays(programmers, departments);
-    // printArrays(programmers, departments); //
     match(programmers, departments, selection);
     return 0;
 }
