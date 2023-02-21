@@ -13,7 +13,7 @@ void populateArrays(int programmers[10][10], int departments[10][10]){
     fclose(input);
 }
 
-int selectionsFilled(int selection[5][2]){
+int selectionsNotFilled(int selection[5][2]){
     for (int i = 0; i < 5; i++){
         if (selection[i][1] == -1){
             return 1;
@@ -22,7 +22,7 @@ int selectionsFilled(int selection[5][2]){
     return 0;
 }
 
-void check(int selection[5][2], int programmer){
+int check(int selection[5][2], int programmer){
     for (int i = 0; i < 5; i++){
         if (selection[i][1] == programmer){
             return 1;
@@ -32,16 +32,46 @@ void check(int selection[5][2], int programmer){
 }
 
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
-    do {
+    while (selectionsNotFilled(selection)){
+        printSelections(selection);
         for (int i = 0; i < 5; i++){
             if (selection[i][1] == -1){
-                for (int k = 0; k < 5; k++){
-                    
+                for (int j = 0; j < 5; j++){
+                    if (check(selection, departments[i][j])){
+                        int *value = &i;
+                        for (int k; k < 5; k++){
+                            int key;
+                            for (int a = 0; a < 5; a++){
+                                if(selection[a][1] == departments[i][j]){
+                                    key = a;
+                                }
+                            }
+                            if(programmers[(departments[i][j] - 1)][k] == i + 1){
+                                break;
+                            } else if (programmers[(departments[i][j] - 1)][k] == key + 1){
+                                value = NULL;
+                                break;
+                            }
+                        }
+                        if (value != NULL){
+                            int key;
+                            for (int a = 0; a < 5; a++){
+                                if(selection[a][1] == departments[i][j]){
+                                    key = a;
+                                }
+                            }
+                            selection[key][1] = -1;
+                            selection[i][1] = departments[i][j];
+                            break;
+                        } else{
+                            selection[i][1] = departments[i][j];
+                            break;
+                        }
+                    }
                 }
             }
         }
-    } while (selectionsFilled(selection))
-
+    }
 }
 
 void printSelections(int selection[5][2]){
