@@ -29,10 +29,11 @@ void printArrays(int programmers[10][10], int departments[10][10]){
 void match(int programmers[10][10], int departments[10][10], int selection[5][2]){
     for (int i = 0; i < 5; i++){
         for (int dep1 = 0; dep1 < 5; dep1++){
+            printf("Department %d Row %d, ", dep1 + 1, i + 1);
             int counter = 0;
             int conflicts[5];
-            for (int dep2 = 1 + dep1; dep2 < 5; dep2++){
-                if (departments[dep1][i] == departments[dep2][i]){
+            for (int dep2 = 0; dep2 < 5; dep2++){
+                if (departments[dep1][i] == departments[dep2][i] && dep1 != dep2){
                     if (counter == 0) conflicts[0] = dep1 + 1;
                     counter++;
                     conflicts[counter] = dep2 + 1;
